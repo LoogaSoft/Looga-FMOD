@@ -1,0 +1,16 @@
+{
+    "name": "LoogaSoft.FMOD.Runtime",
+    "rootNamespace": "LoogaSoft.FMOD.Runtime",
+    "references": [
+        "FMODUnity"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

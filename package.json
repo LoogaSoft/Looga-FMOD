@@ -1,0 +1,11 @@
+{
+  "displayName": "Looga FMOD",
+  "name": "com.loogasoft.loogafmod",
+  "description": "A lightweight LoogaSoft gameplay audio layer for FMOD Unity.",
+  "version": "0.1.0",
+  "unity": "2022.3",
+  "author": {
+    "name": "LoogaSoft"
+  },
+  "dependencies": {}
+}
