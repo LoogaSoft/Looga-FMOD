@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace LoogaSoft.FMOD.Runtime
 {
-    [CreateAssetMenu(fileName = "New Looga FMOD Event", menuName = "LoogaSoft/FMOD/Event")]
+    [CreateAssetMenu(fileName = "New Looga FMOD Event", menuName = "LoogaSoft/Integrations/FMOD/Event")]
     public sealed class LoogaFmodEvent : ScriptableObject
     {
         [SerializeField] private EventReference _eventReference;
