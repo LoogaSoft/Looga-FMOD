@@ -2,7 +2,8 @@
     "name": "LoogaSoft.FMOD.Runtime",
     "rootNamespace": "LoogaSoft.FMOD.Runtime",
     "references": [
-        "FMODUnity"
+        "FMODUnity",
+        "LoogaSoft.Inspector.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

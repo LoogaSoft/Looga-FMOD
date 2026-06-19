@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FMODUnity;
+using LoogaSoft.Inspector.Runtime;
 using UnityEngine;
 
 namespace LoogaSoft.FMOD.Runtime
@@ -37,6 +38,7 @@ namespace LoogaSoft.FMOD.Runtime
                 Stop();
         }
 
+        [Button("Play", mode: LoogaButtonMode.PlayModeOnly)]
         public void Play()
         {
             if (_loopingEvent)
@@ -84,6 +86,7 @@ namespace LoogaSoft.FMOD.Runtime
                 : LoogaFmod.Start(_fallbackEvent, transform.position, _parameters);
         }
 
+        [Button("Stop", mode: LoogaButtonMode.PlayModeOnly)]
         public void Stop()
         {
             Stop(_stopMode);

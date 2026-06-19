@@ -1,6 +1,6 @@
 using FMODUnity;
+using LoogaSoft.Inspector.Runtime;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace LoogaSoft.FMOD.Runtime
 {
@@ -11,10 +11,6 @@ namespace LoogaSoft.FMOD.Runtime
         [SerializeField] private bool _attachOneShots = true;
         [SerializeField] private bool _trackNonRigidbodyVelocity;
         [SerializeField, Min(0f)] private float _volume = 1f;
-        [FormerlySerializedAs("_pitch"), SerializeField, HideInInspector]
-        private float _legacyPitch = 1f;
-        [SerializeField, HideInInspector]
-        private bool _pitchRangeMigrated;
         [SerializeField, Min(0.01f)] private Vector2 _pitchRange = Vector2.one;
 
         public EventReference EventReference => _eventReference;
@@ -26,13 +22,11 @@ namespace LoogaSoft.FMOD.Runtime
 
         private void OnEnable()
         {
-            MigratePitchRange();
             ValidatePitchRange();
         }
 
         private void OnValidate()
         {
-            MigratePitchRange();
             ValidatePitchRange();
         }
 
@@ -42,14 +36,10 @@ namespace LoogaSoft.FMOD.Runtime
             return Random.Range(_pitchRange.x, _pitchRange.y);
         }
 
-        private void MigratePitchRange()
+        [Button("Play At Origin", mode: LoogaButtonMode.PlayModeOnly)]
+        private void PlayAtOrigin()
         {
-            if (_pitchRangeMigrated)
-                return;
-
-            float pitch = Mathf.Max(0.01f, _legacyPitch);
-            _pitchRange = new Vector2(pitch, pitch);
-            _pitchRangeMigrated = true;
+            LoogaFmod.PlayOneShot(this, Vector3.zero);
         }
 
         private void ValidatePitchRange()
