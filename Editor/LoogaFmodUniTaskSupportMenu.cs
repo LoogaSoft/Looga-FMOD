@@ -7,7 +7,6 @@ namespace LoogaSoft.FMOD.Editor
     {
         private const string MenuPath = "LoogaSoft/FMOD/Enable UniTask Support";
         private const string DefineSymbol = "LOOGA_FMOD_UNITASK_SUPPORT";
-        private const string RuntimeAsmdef = "LoogaSoft.FMOD.Runtime";
 
         private static readonly string[] RequiredAssemblies =
         {
@@ -41,16 +40,12 @@ namespace LoogaSoft.FMOD.Editor
 
         private static bool IsEnabled()
         {
-            return LoogaFmodOptionalSupportUtility.DefineIsEnabled(DefineSymbol)
-                && LoogaFmodOptionalSupportUtility.AsmdefReferences(RuntimeAsmdef, "UniTask");
+            return LoogaFmodOptionalSupportUtility.DefineIsEnabled(DefineSymbol);
         }
 
         private static void Enable()
         {
             LoogaFmodOptionalSupportUtility.AddDefineSymbol(DefineSymbol);
-            if (!LoogaFmodOptionalSupportUtility.SetAsmdefReferences(RuntimeAsmdef, RequiredAssemblies, include: true, out string error))
-                EditorUtility.DisplayDialog("Unable To Update FMOD", error, "OK");
-
             AssetDatabase.Refresh();
             Debug.Log("Looga FMOD UniTask support enabled.");
         }
@@ -58,9 +53,6 @@ namespace LoogaSoft.FMOD.Editor
         private static void Disable()
         {
             LoogaFmodOptionalSupportUtility.RemoveDefineSymbol(DefineSymbol);
-            if (!LoogaFmodOptionalSupportUtility.SetAsmdefReferences(RuntimeAsmdef, RequiredAssemblies, include: false, out string error))
-                EditorUtility.DisplayDialog("Unable To Update FMOD", error, "OK");
-
             AssetDatabase.Refresh();
             Debug.Log("Looga FMOD UniTask support disabled.");
         }

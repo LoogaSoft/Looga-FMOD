@@ -1,0 +1,19 @@
+{
+    "name": "LoogaSoft.FMOD.UniTask",
+    "rootNamespace": "LoogaSoft.FMOD.Runtime",
+    "references": [
+        "LoogaSoft.FMOD.Runtime",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "LOOGA_FMOD_UNITASK_SUPPORT"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
