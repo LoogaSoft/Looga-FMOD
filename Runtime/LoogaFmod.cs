@@ -113,6 +113,32 @@ namespace LoogaSoft.FMOD.Runtime
             return new LoogaFmodHandle(instance);
         }
 
+        public static bool PreloadSampleData(LoogaFmodEvent sound)
+        {
+            return sound != null && PreloadSampleData(sound.EventReference);
+        }
+
+        public static bool PreloadSampleData(EventReference eventReference)
+        {
+            if (!TryGetEventDescription(eventReference, out EventDescription description))
+                return false;
+
+            return description.loadSampleData() == global::FMOD.RESULT.OK;
+        }
+
+        public static bool UnloadSampleData(LoogaFmodEvent sound)
+        {
+            return sound != null && UnloadSampleData(sound.EventReference);
+        }
+
+        public static bool UnloadSampleData(EventReference eventReference)
+        {
+            if (!TryGetEventDescription(eventReference, out EventDescription description))
+                return false;
+
+            return description.unloadSampleData() == global::FMOD.RESULT.OK;
+        }
+
         internal static global::FMOD.Studio.STOP_MODE ToFmodStopMode(LoogaFmodStopMode mode)
         {
             return mode == LoogaFmodStopMode.Immediate
@@ -143,19 +169,33 @@ namespace LoogaSoft.FMOD.Runtime
             return instance.isValid();
         }
 
+        private static bool TryGetEventDescription(EventReference eventReference, out EventDescription description)
+        {
+            if (eventReference.IsNull)
+            {
+                description = default;
+                return false;
+            }
+
+            description = RuntimeManager.GetEventDescription(eventReference);
+            return description.isValid();
+        }
+
         private static void ApplyParameters(EventInstance instance, IReadOnlyList<LoogaFmodParameter> parameters)
         {
             if (!instance.isValid() || parameters == null)
                 return;
 
             for (int i = 0; i < parameters.Count; i++)
-            {
-                LoogaFmodParameter parameter = parameters[i];
-                if (string.IsNullOrWhiteSpace(parameter.name))
-                    continue;
+                ApplyParameter(instance, parameters[i]);
+        }
 
-                instance.setParameterByName(parameter.name, parameter.value, parameter.ignoreSeekSpeed);
-            }
+        private static void ApplyParameter(EventInstance instance, LoogaFmodParameter parameter)
+        {
+            if (string.IsNullOrWhiteSpace(parameter.name))
+                return;
+
+            instance.setParameterByName(parameter.name, parameter.value, parameter.ignoreSeekSpeed);
         }
 
         private static void ApplyPlayback(EventInstance instance, float volume, float pitch)
@@ -166,6 +206,5 @@ namespace LoogaSoft.FMOD.Runtime
             instance.setVolume(Mathf.Max(0f, volume));
             instance.setPitch(Mathf.Max(0.01f, pitch));
         }
-
     }
 }
