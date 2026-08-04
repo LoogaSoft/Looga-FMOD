@@ -3,9 +3,8 @@ using UnityEngine;
 
 namespace LoogaSoft.FMOD.Editor
 {
-    internal static class LoogaFmodUniTaskSupportMenu
+    internal static class LoogaFmodUniTaskSupportProvider
     {
-        private const string MenuPath = "LoogaSoft/FMOD/Enable UniTask Support";
         private const string DefineSymbol = "LOOGA_FMOD_UNITASK_SUPPORT";
 
         private static readonly string[] RequiredAssemblies =
@@ -13,34 +12,29 @@ namespace LoogaSoft.FMOD.Editor
             "UniTask"
         };
 
-        [MenuItem(MenuPath, priority = 203)]
-        private static void ToggleUniTaskSupport()
-        {
-            if (IsEnabled())
-            {
-                Disable();
-                return;
-            }
+        public static string ProviderId => "looga-fmod.unitask";
+        public static string PackageName => "Looga FMOD";
+        public static string IntegrationName => "UniTask";
+        public static string Description => "Adds allocation-conscious async helpers for FMOD operations.";
 
-            if (!LoogaFmodOptionalSupportUtility.AllAssembliesAreAvailable(RequiredAssemblies, out string missingAssemblies))
-            {
-                EditorUtility.DisplayDialog("UniTask Not Found", "Install UniTask before enabling Looga FMOD UniTask support.\n\nMissing: " + missingAssemblies, "OK");
-                return;
-            }
-
-            Enable();
-        }
-
-        [MenuItem(MenuPath, true)]
-        private static bool ValidateToggle()
-        {
-            UnityEditor.Menu.SetChecked(MenuPath, IsEnabled());
-            return true;
-        }
-
-        private static bool IsEnabled()
+        public static bool IsEnabled()
         {
             return LoogaFmodOptionalSupportUtility.DefineIsEnabled(DefineSymbol);
+        }
+
+        public static string GetUnavailableReason()
+        {
+            return LoogaFmodOptionalSupportUtility.AllAssembliesAreAvailable(RequiredAssemblies, out string missingAssemblies)
+                ? string.Empty
+                : "Install UniTask. Missing assemblies: " + missingAssemblies;
+        }
+
+        public static void SetEnabled(bool enabled)
+        {
+            if (enabled)
+                Enable();
+            else
+                Disable();
         }
 
         private static void Enable()
