@@ -55,6 +55,17 @@ namespace LoogaSoft.FMOD.Runtime
             _instance.setVolume(volume);
         }
 
+        /// <summary>
+        /// Reads the volume set on this FMOD instance.
+        /// </summary>
+        /// <param name="volume">The instance volume, or zero when the handle is invalid.</param>
+        /// <returns>True when FMOD returns the instance volume.</returns>
+        public bool TryGetVolume(out float volume)
+        {
+            volume = 0f;
+            return IsValid && _instance.getVolume(out volume) == FMOD.RESULT.OK;
+        }
+
         public void SetPitch(float pitch)
         {
             if (!IsValid)
