@@ -63,7 +63,7 @@ namespace LoogaSoft.FMOD.Runtime
         public bool TryGetVolume(out float volume)
         {
             volume = 0f;
-            return IsValid && _instance.getVolume(out volume) == FMOD.RESULT.OK;
+            return IsValid && _instance.getVolume(out volume) == global::FMOD.RESULT.OK;
         }
 
         public void SetPitch(float pitch)
